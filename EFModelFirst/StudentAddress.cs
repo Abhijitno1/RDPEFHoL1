@@ -12,13 +12,14 @@ namespace EFModelFirst
     using System;
     using System.Collections.Generic;
     
-    public partial class Student
+    public partial class StudentAddress
     {
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public string City { get; set; }
         public int StudentId { get; set; }
-        public string StudentName { get; set; }
-        public short StandardId { get; set; }
+        public short Pin { get; set; }
     
-        public virtual Standard Standard { get; set; }
-        public virtual StudentAddress Address { get; set; }
+        public virtual Student Student { get; set; }
     }
 }

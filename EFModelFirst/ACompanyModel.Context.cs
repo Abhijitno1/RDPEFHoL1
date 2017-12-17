@@ -34,6 +34,7 @@ namespace EFModelFirst
         public DbSet<Standard> Standards { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<StudentAddress> StudentAddresses { get; set; }
     
         public virtual ObjectResult<BooksWithAuthors_Result> BooksWithAuthors(Nullable<int> bookId)
         {

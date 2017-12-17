@@ -9,11 +9,13 @@
         <EntityTypeShape EntityType="ACompanyModel.Department" Width="1.5" PointX="3" PointY="0.875" />
         <AssociationConnector Association="ACompanyModel.DepartmentEmployee" />
         <EntityTypeShape EntityType="ACompanyModel.Student" Width="1.5" PointX="4.875" PointY="1" />
-        <EntityTypeShape EntityType="ACompanyModel.Standard" Width="1.5" PointX="6.875" PointY="1.125" />
+        <EntityTypeShape EntityType="ACompanyModel.Standard" Width="1.5" PointX="7.125" PointY="0.875" />
         <AssociationConnector Association="ACompanyModel.StandardStudent" />
         <EntityTypeShape EntityType="ACompanyModel.Book" Width="1.5" PointX="1.75" PointY="3.375" />
         <EntityTypeShape EntityType="ACompanyModel.Author" Width="1.5" PointX="3.75" PointY="3.375" />
         <AssociationConnector Association="ACompanyModel.BookAuthorJoiner" />
+        <EntityTypeShape EntityType="ACompanyModel.StudentAddress" Width="1.5" PointX="7.125" PointY="3" />
+        <AssociationConnector Association="ACompanyModel.StudentStudentAddress" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

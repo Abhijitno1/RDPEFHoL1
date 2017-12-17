@@ -4,140 +4,164 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ACompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Authors">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AuthorName" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="BookAuthor">
-          <Key>
-            <PropertyRef Name="Books_Id" />
-            <PropertyRef Name="Authors_Id" />
-          </Key>
-          <Property Name="Books_Id" Type="int" Nullable="false" />
-          <Property Name="Authors_Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Books">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BookName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Publisher" Type="varchar(max)" Nullable="false" />
-          <Property Name="Subject" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="Departments">
-          <Key>
-            <PropertyRef Name="DepartmentId" />
-          </Key>
-          <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Employees">
-          <Key>
-            <PropertyRef Name="EmployeeId" />
-          </Key>
-          <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="Age" Type="smallint" />
-          <Property Name="DepartmentId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Standards">
-          <Key>
-            <PropertyRef Name="StandardId" />
-          </Key>
-          <Property Name="StandardId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Students">
-          <Key>
-            <PropertyRef Name="StudentId" />
-          </Key>
-          <Property Name="StudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="StandardId" Type="smallint" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_BookAuthorJoiner_Author">
-          <End Role="Authors" Type="Self.Authors" Multiplicity="1" />
-          <End Role="BookAuthor" Type="Self.BookAuthor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Authors">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="BookAuthor">
-              <PropertyRef Name="Authors_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BookAuthorJoiner_Book">
-          <End Role="Books" Type="Self.Books" Multiplicity="1" />
-          <End Role="BookAuthor" Type="Self.BookAuthor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Books">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="BookAuthor">
-              <PropertyRef Name="Books_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DepartmentEmployee">
-          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
-          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Departments">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="Employees">
-              <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StandardStudent">
-          <End Role="Standards" Type="Self.Standards" Multiplicity="1" />
-          <End Role="Students" Type="Self.Students" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Standards">
-              <PropertyRef Name="StandardId" />
-            </Principal>
-            <Dependent Role="Students">
-              <PropertyRef Name="StandardId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Function Name="BooksWithAuthors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="BookId" Type="int" Mode="In" />
-        </Function>
-        <EntityContainer Name="ACompanyModelStoreContainer">
-          <EntitySet Name="Authors" EntityType="Self.Authors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BookAuthor" EntityType="Self.BookAuthor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Standards" EntityType="Self.Standards" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_BookAuthorJoiner_Author" Association="Self.FK_BookAuthorJoiner_Author">
-            <End Role="Authors" EntitySet="Authors" />
-            <End Role="BookAuthor" EntitySet="BookAuthor" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BookAuthorJoiner_Book" Association="Self.FK_BookAuthorJoiner_Book">
-            <End Role="Books" EntitySet="Books" />
-            <End Role="BookAuthor" EntitySet="BookAuthor" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DepartmentEmployee" Association="Self.FK_DepartmentEmployee">
-            <End Role="Departments" EntitySet="Departments" />
-            <End Role="Employees" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StandardStudent" Association="Self.FK_StandardStudent">
-            <End Role="Standards" EntitySet="Standards" />
-            <End Role="Students" EntitySet="Students" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="ACompanyModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ACompanyModelStoreContainer">
+    <EntitySet Name="Employees" EntityType="ACompanyModel.Store.Employees" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Departments" EntityType="ACompanyModel.Store.Departments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Students" EntityType="ACompanyModel.Store.Students" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Standards" EntityType="ACompanyModel.Store.Standards" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Books" EntityType="ACompanyModel.Store.Books" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Authors" EntityType="ACompanyModel.Store.Authors" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StudentAddresses" EntityType="ACompanyModel.Store.StudentAddresses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BookAuthor" EntityType="ACompanyModel.Store.BookAuthorJoiner" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="DepartmentEmployee" Association="ACompanyModel.Store.DepartmentEmployee">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="StandardStudent" Association="ACompanyModel.Store.StandardStudent">
+      <End Role="Standard" EntitySet="Standards" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookAuthor_Book" Association="ACompanyModel.Store.FK_BookAuthorJoiner_Book">
+      <End Role="Book" EntitySet="Books" />
+      <End Role="BookAuthorJoiner" EntitySet="BookAuthor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookAuthor_Author" Association="ACompanyModel.Store.FK_BookAuthorJoiner_Author">
+      <End Role="Author" EntitySet="Authors" />
+      <End Role="BookAuthorJoiner" EntitySet="BookAuthor" />
+    </AssociationSet>
+    <AssociationSet Name="StudentStudentAddress" Association="ACompanyModel.Store.StudentStudentAddress">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="StudentAddress" EntitySet="StudentAddresses" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="40" />
+    <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="40" />
+    <Property Name="Age" Type="smallint" Nullable="true" />
+    <Property Name="DepartmentId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Departments">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentName" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StandardId" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Standards">
+    <Key>
+      <PropertyRef Name="StandardId" />
+    </Key>
+    <Property Name="StandardId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Books">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Publisher" Type="varchar(max)" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Authors">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AuthorName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StudentAddresses">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="AddressLine1" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AddressLine2" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="Pin" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BookAuthorJoiner">
+    <Key>
+      <PropertyRef Name="Books_Id" />
+      <PropertyRef Name="Authors_Id" />
+    </Key>
+    <Property Name="Books_Id" Type="int" Nullable="false" />
+    <Property Name="Authors_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="DepartmentEmployee">
+    <End Role="Department" Type="ACompanyModel.Store.Departments" Multiplicity="1" />
+    <End Role="Employee" Type="ACompanyModel.Store.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StandardStudent">
+    <End Role="Standard" Type="ACompanyModel.Store.Standards" Multiplicity="1" />
+    <End Role="Student" Type="ACompanyModel.Store.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Standard">
+        <PropertyRef Name="StandardId" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="StandardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StudentStudentAddress">
+    <End Role="Student" Type="ACompanyModel.Store.Students" Multiplicity="1" />
+    <End Role="StudentAddress" Type="ACompanyModel.Store.StudentAddresses" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentAddress">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookAuthorJoiner_Book">
+    <End Role="Book" Type="ACompanyModel.Store.Books" Multiplicity="1" />
+    <End Role="BookAuthorJoiner" Type="ACompanyModel.Store.BookAuthorJoiner" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BookAuthorJoiner">
+        <PropertyRef Name="Books_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookAuthorJoiner_Author">
+    <End Role="BookAuthorJoiner" Type="ACompanyModel.Store.BookAuthorJoiner" Multiplicity="*" />
+    <End Role="Author" Type="ACompanyModel.Store.Authors" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BookAuthorJoiner">
+        <PropertyRef Name="Authors_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ACompanyModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -161,8 +185,13 @@
             <End Role="Author" EntitySet="Authors" />
           </AssociationSet>
           <FunctionImport Name="BooksWithAuthors" ReturnType="Collection(ACompanyModel.BooksWithAuthors_Result)">
-            <Parameter Name="BookId" Mode="In" Type="Int32" />
+          <Parameter Name="BookId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="StudentAddresses" EntityType="ACompanyModel.StudentAddress" />
+          <AssociationSet Name="StudentStudentAddress" Association="ACompanyModel.StudentStudentAddress">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentAddress" EntitySet="StudentAddresses" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Employee">
           <Key>
@@ -203,6 +232,7 @@
           <Property Name="StudentName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="StandardId" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Standard" Relationship="ACompanyModel.StandardStudent" FromRole="Student" ToRole="Standard" />
+          <NavigationProperty Name="Address" Relationship="ACompanyModel.StudentStudentAddress" FromRole="Student" ToRole="StudentAddress" />
         </EntityType>
         <EntityType Name="Standard">
           <Key>
@@ -252,6 +282,29 @@
           <Property Type="String" Name="Subject" Nullable="true" />
           <Property Type="String" Name="AuthorName" Nullable="false" />
         </ComplexType>
+        <EntityType Name="StudentAddress" >
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="AddressLine1" Type="String" Nullable="false" />
+          <Property Name="AddressLine2" Type="String" Nullable="true" />
+          <Property Name="City" Type="String" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="Pin" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Student" Relationship="ACompanyModel.StudentStudentAddress" FromRole="StudentAddress" ToRole="Student" />
+        </EntityType>
+        <Association Name="StudentStudentAddress">
+          <End Type="ACompanyModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="ACompanyModel.StudentAddress" Role="StudentAddress" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="StudentAddress">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -312,6 +365,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="StudentAddresses">
+      <EntityTypeMapping TypeName="IsTypeOf(ACompanyModel.StudentAddress)">
+        <MappingFragment StoreEntitySet="StudentAddresses">
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Pin" ColumnName="Pin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="BookAuthor" TypeName="ACompanyModel.BookAuthorJoiner" StoreEntitySet="BookAuthor">
       <EndProperty Name="Book">
         <ScalarProperty Name="Id" ColumnName="Books_Id" />
@@ -320,16 +384,6 @@
         <ScalarProperty Name="Id" ColumnName="Authors_Id" />
       </EndProperty>
     </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="BooksWithAuthors" FunctionName="ACompanyModel.Store.BooksWithAuthors">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ACompanyModel.BooksWithAuthors_Result">
-                <ScalarProperty Name="BookName" ColumnName="BookName" />
-                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
