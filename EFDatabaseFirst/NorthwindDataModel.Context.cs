@@ -80,5 +80,67 @@ namespace EFDatabaseFirst
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InsertRegion", regionIDParameter, regionDescriptionParameter);
         }
+    
+        public virtual ObjectResult<CustOrderHist_Result> CustOrderHist(string customerID)
+        {
+            var customerIDParameter = customerID != null ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CustOrderHist_Result>("CustOrderHist", customerIDParameter);
+        }
+    
+        public virtual int DeleteRegion(Nullable<int> regionID)
+        {
+            var regionIDParameter = regionID.HasValue ?
+                new ObjectParameter("RegionID", regionID) :
+                new ObjectParameter("RegionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteRegion", regionIDParameter);
+        }
+    
+        public virtual ObjectResult<Sales_by_Year_Result> Sales_by_Year(Nullable<System.DateTime> beginning_Date, Nullable<System.DateTime> ending_Date)
+        {
+            var beginning_DateParameter = beginning_Date.HasValue ?
+                new ObjectParameter("Beginning_Date", beginning_Date) :
+                new ObjectParameter("Beginning_Date", typeof(System.DateTime));
+    
+            var ending_DateParameter = ending_Date.HasValue ?
+                new ObjectParameter("Ending_Date", ending_Date) :
+                new ObjectParameter("Ending_Date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sales_by_Year_Result>("Sales_by_Year", beginning_DateParameter, ending_DateParameter);
+        }
+    
+        public virtual ObjectResult<SalesByCategory_Result> SalesByCategory(string categoryName, string ordYear)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            var ordYearParameter = ordYear != null ?
+                new ObjectParameter("OrdYear", ordYear) :
+                new ObjectParameter("OrdYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SalesByCategory_Result>("SalesByCategory", categoryNameParameter, ordYearParameter);
+        }
+    
+        public virtual ObjectResult<Ten_Most_Expensive_Products_Result> Ten_Most_Expensive_Products()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Ten_Most_Expensive_Products_Result>("Ten_Most_Expensive_Products");
+        }
+    
+        public virtual int UpdateRegion(Nullable<int> regionID, string regionDescription)
+        {
+            var regionIDParameter = regionID.HasValue ?
+                new ObjectParameter("RegionID", regionID) :
+                new ObjectParameter("RegionID", typeof(int));
+    
+            var regionDescriptionParameter = regionDescription != null ?
+                new ObjectParameter("RegionDescription", regionDescription) :
+                new ObjectParameter("RegionDescription", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateRegion", regionIDParameter, regionDescriptionParameter);
+        }
     }
 }
